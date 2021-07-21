@@ -1,20 +1,21 @@
 import { StyleSheet } from "react-native";
 import { theme } from "../../global/styles/theme";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  header: {
     width: "100%",
-    paddingHorizontal: 24,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: getStatusBarHeight() + 26,
-    marginBottom: 42,
+    paddingHorizontal: 24,
   },
-  content: {
-    marginTop: 42,
+  title: {
+    fontFamily: theme.fonts.title700,
+    color: theme.colors.heading,
+    fontSize: 18,
+  },
+  subtitle: {
+    fontFamily: theme.fonts.text400,
+    color: theme.colors.highlight,
+    fontSize: 13,
   },
 });
