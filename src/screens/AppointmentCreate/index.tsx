@@ -1,63 +1,99 @@
-import React from "react";
-import { ImageBackground, View, Text, FlatList } from "react-native";
-import { BorderlessButton } from "react-native-gesture-handler";
-import { Fontisto } from "@expo/vector-icons";
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { RectButton } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons";
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
-import { Banner } from "../../assets/banner.png";
 
 import { Background } from "../../components/Background";
+import { CategorySelect } from "../../components/CategorySelect";
 import { Header } from "../../components/Header";
-import { ListHeader } from "../../components/ListHeader";
-import { Member } from "../../components/Member";
-import { ListDivider } from "../../components/ListDivider";
-import { ButtonIcon } from "../../components/ButtonIcon";
+import { GuildIcon } from "../../components/GuildIcon";
+import { SmallInput } from "../../components/SmallInput";
+import { TextArea } from "../../components/TextArea";
+import { Button } from "../../components/Button";
 export const AppointmentCreate = () => {
-  const members = [
-    {
-      id: "1",
-      username: "Andre",
-      avatar_url: "https://github.com/andreflor21.png",
-      status: "online",
-    },
-    {
-      id: "2",
-      username: "Andre",
-      avatar_url: "https://github.com/andreflor21.png",
-      status: "offline",
-    },
-  ];
+  const [category, setCategory] = useState<string>("");
   return (
-    <Background>
-      <Header
-        title="Detalhes"
-        action={
-          <BorderlessButton>
-            <Fontisto name="share" size={24} color={theme.colors.primary} />
-          </BorderlessButton>
-        }
-      />
-      <ImageBackground source={Banner} style={styles.banner}>
-        <View style={styles.bannerContent}>
-          <Text style={styles.title}>Lendário</Text>
-          <Text style={styles.subtitle}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae
-            impedit{" "}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <ScrollView>
+        <Background>
+          <Header title="Agendar Partida" />
+
+          <Text
+            style={[
+              styles.label,
+              { marginLeft: 24, marginTop: 36, marginBottom: 18 },
+            ]}
+          >
+            Categoria
           </Text>
-        </View>
-      </ImageBackground>
-      <ListHeader title="Jogadores" subtitle="Total 3" />
-      <FlatList
-        data={members}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Member data={item} />}
-        ItemSeparatorComponent={() => <ListDivider />}
-        style={styles.members}
-      />
-      <View style={styles.footer}>
-        <ButtonIcon title="Entrar na partida" />
-      </View>
-    </Background>
+          <CategorySelect
+            hasCheckBox
+            setCategory={setCategory}
+            categorySelected={category}
+          />
+          <View style={styles.form}>
+            <RectButton>
+              <View style={styles.select}>
+                {
+                  <GuildIcon />
+                  // <View style={styles.image} />
+                }
+                <View style={styles.selectBody}>
+                  <Text style={styles.label}>Selecione um servidor</Text>
+                </View>
+                <Feather
+                  name="chevron-right"
+                  color={theme.colors.heading}
+                  size={18}
+                />
+              </View>
+            </RectButton>
+            <View style={styles.field}>
+              <View>
+                <Text style={styles.label}> Dia e mês</Text>
+                <View style={styles.column}>
+                  <SmallInput maxLength={2} />
+                  <Text style={styles.divider}>/</Text>
+                  <SmallInput maxLength={2} />
+                </View>
+              </View>
+
+              <View>
+                <Text style={styles.label}> Hora e minuto</Text>
+                <View style={styles.column}>
+                  <SmallInput maxLength={2} />
+                  <Text style={styles.divider}>:</Text>
+                  <SmallInput maxLength={2} />
+                </View>
+              </View>
+            </View>
+            <View style={[styles.field, { marginBottom: 12 }]}>
+              <Text style={styles.label}>Descrição</Text>
+              <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
+            </View>
+            <TextArea
+              multiline
+              maxLength={100}
+              numberOfLines={5}
+              autoCorrect={false}
+            />
+            <View style={styles.footer}>
+              <Button title="Agendar" />
+            </View>
+          </View>
+        </Background>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
