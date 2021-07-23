@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { FlatList, Text, View } from "react-native";
 import { Profile } from "../../components/Profile";
@@ -12,7 +13,7 @@ import { Appointment } from "../../components/Appointment";
 import { ListDivider } from "../../components/ListDivider";
 export function Home() {
   const [category, setCategory] = useState<string>("");
-
+  const navigation = useNavigation();
   const appointments = [
     {
       id: "1",
@@ -44,12 +45,18 @@ export function Home() {
   const handleCategorySelect = (categoryId: string) => {
     categoryId === category ? setCategory("") : setCategory(categoryId);
   };
+  const handleAppointmentDetails = () => {
+    navigation.navigate("AppointmentDetails");
+  };
+  const handleAppointmentCreate = () => {
+    navigation.navigate("AppointmentCreate");
+  };
   return (
     <Background>
       <View>
         <View style={styles.header}>
           <Profile />
-          <ButtonAdd />
+          <ButtonAdd onPress={handleAppointmentCreate} />
         </View>
         <CategorySelect
           categorySelected={category}
@@ -61,7 +68,9 @@ export function Home() {
           <FlatList
             data={appointments}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <Appointment data={item} />}
+            renderItem={({ item }) => (
+              <Appointment onPress={handleAppointmentDetails} data={item} />
+            )}
             ItemSeparatorComponent={() => <ListDivider />}
             style={styles.matches}
             showsVerticalScrollIndicator={false}
