@@ -20,7 +20,7 @@ import { TextArea } from "../../components/TextArea";
 import { Button } from "../../components/Button";
 import { ModalView } from "../../components/ModalView";
 import { Guilds } from "../Guilds";
-import { GuildProps } from "../../components/Appointment";
+import { GuildProps } from "../../components/Guild";
 export const AppointmentCreate = () => {
     const [category, setCategory] = useState<string>("");
     const [openGuildsModal, setOpenGuildsModal] = useState<boolean>(false);
@@ -35,13 +35,16 @@ export const AppointmentCreate = () => {
         setGuild(guildSelected);
         setOpenGuildsModal(false);
     };
+    const handleCategorySelect = (categoryId: string) => {
+        setCategory(categoryId);
+    };
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
         >
-            <ScrollView>
-                <Background>
+            <Background>
+                <ScrollView>
                     <Header title="Agendar Partida" />
 
                     <Text
@@ -54,7 +57,7 @@ export const AppointmentCreate = () => {
                     </Text>
                     <CategorySelect
                         hasCheckBox
-                        setCategory={setCategory}
+                        setCategory={handleCategorySelect}
                         categorySelected={category}
                     />
                     <View style={styles.form}>
@@ -81,7 +84,12 @@ export const AppointmentCreate = () => {
                         </RectButton>
                         <View style={styles.field}>
                             <View>
-                                <Text style={styles.label}> Dia e mês</Text>
+                                <Text
+                                    style={[styles.label, { marginBottom: 12 }]}
+                                >
+                                    {" "}
+                                    Dia e mês
+                                </Text>
                                 <View style={styles.column}>
                                     <SmallInput maxLength={2} />
                                     <Text style={styles.divider}>/</Text>
@@ -90,7 +98,12 @@ export const AppointmentCreate = () => {
                             </View>
 
                             <View>
-                                <Text style={styles.label}> Hora e minuto</Text>
+                                <Text
+                                    style={[styles.label, { marginBottom: 12 }]}
+                                >
+                                    {" "}
+                                    Hora e minuto
+                                </Text>
                                 <View style={styles.column}>
                                     <SmallInput maxLength={2} />
                                     <Text style={styles.divider}>:</Text>
@@ -114,8 +127,8 @@ export const AppointmentCreate = () => {
                             <Button title="Agendar" />
                         </View>
                     </View>
-                </Background>
-            </ScrollView>
+                </ScrollView>
+            </Background>
             <ModalView visible={openGuildsModal} closeModal={handleCloseGuilds}>
                 <Guilds handleGuildSelect={handleGuildSelect} />
             </ModalView>
