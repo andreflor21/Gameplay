@@ -130,7 +130,7 @@ export const AppointmentDetails = () => {
                 </>
             )}
 
-            {guildSelected.guild.owner && (
+            {guildSelected.guild.owner && Platform.OS !== "ios" && (
                 <View style={styles.footer}>
                     <ButtonIcon
                         title="Entrar na partida"
