@@ -6,7 +6,7 @@ const { CDN_IMAGE } = process.env;
 
 type Props = {
     guildId: string;
-    iconId: string;
+    iconId: string | null;
 };
 export const GuildIcon = ({ guildId, iconId }: Props) => {
     const uri = `${CDN_IMAGE}/icons/${guildId}/${iconId}.png`;
