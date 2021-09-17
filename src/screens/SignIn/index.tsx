@@ -10,7 +10,7 @@ import { ButtonIcon } from "../../components/ButtonIcon";
 
 import { useAuth } from "../../hooks/auth";
 
-export function SignIn() {
+export const SignIn = () => {
     const { loading, signIn } = useAuth();
     const HandleSingIn = async () => {
         try {
@@ -49,4 +49,4 @@ export function SignIn() {
             </View>
         </Background>
     );
-}
+};

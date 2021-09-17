@@ -28,7 +28,7 @@ import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Guilds } from "../Guilds";
 
-export function AppointmentCreate() {
+export const AppointmentCreate = () => {
     const [category, setCategory] = useState("");
     const [openGuildsModa, setOpenGuildsModal] = useState(false);
     const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
@@ -41,24 +41,24 @@ export function AppointmentCreate() {
 
     const navigation = useNavigation();
 
-    function handleOpenGuilds() {
+    const handleOpenGuilds = () => {
         setOpenGuildsModal(true);
-    }
+    };
 
-    function handleCloseGuilds() {
+    const handleCloseGuilds = () => {
         setOpenGuildsModal(false);
-    }
+    };
 
-    function handleGuildSelect(guildSelect: GuildProps) {
+    const handleGuildSelect = (guildSelect: GuildProps) => {
         setGuild(guildSelect);
         setOpenGuildsModal(false);
-    }
+    };
 
-    function handleCategorySelect(categoryId: string) {
+    const handleCategorySelect = (categoryId: string) => {
         setCategory(categoryId);
-    }
+    };
 
-    async function handleSave() {
+    const handleSave = async () => {
         const newAppointment = {
             id: uuid.v4(),
             guild,
@@ -76,7 +76,7 @@ export function AppointmentCreate() {
         );
 
         navigation.navigate("Home");
-    }
+    };
 
     return (
         <KeyboardAvoidingView
@@ -200,4 +200,4 @@ export function AppointmentCreate() {
             </ModalView>
         </KeyboardAvoidingView>
     );
-}
+};
