@@ -1,15 +1,16 @@
 import React from "react";
-import { RectButton, RectButtonProps } from "react-native-gesture-handler";
-import { Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { RectButton, RectButtonProps } from "react-native-gesture-handler";
+import { View, Text } from "react-native";
+
 import { theme } from "../../global/styles/theme";
 import { styles } from "./styles";
-import Player from "../../assets/player.svg";
-import Calendar from "../../assets/calendar.svg";
+import PlayerSvg from "../../assets/player.svg";
+import CalendarSvg from "../../assets/calendar.svg";
 
-import { categories } from "../../utils/categories";
-import { GuildIcon } from "../GuildIcon";
 import { GuildProps } from "../Guild";
+import { GuildIcon } from "../GuildIcon";
+import { categories } from "../../utils/categories";
 
 export type AppointmentProps = {
     id: string;
@@ -18,13 +19,16 @@ export type AppointmentProps = {
     date: string;
     description: string;
 };
+
 type Props = RectButtonProps & {
     data: AppointmentProps;
 };
+
 export const Appointment = ({ data, ...rest }: Props) => {
     const [category] = categories.filter((item) => item.id === data.category);
     const { owner } = data.guild;
     const { primary, on, secondary50, secondary70 } = theme.colors;
+
     return (
         <RectButton {...rest}>
             <View style={styles.container}>
@@ -32,29 +36,39 @@ export const Appointment = ({ data, ...rest }: Props) => {
                     style={styles.guildIconContainer}
                     colors={[secondary50, secondary70]}
                 >
-                    <GuildIcon />
+                    <GuildIcon
+                        guildId={data.guild.id}
+                        iconId={data.guild.icon}
+                    />
                 </LinearGradient>
+
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <Text style={styles.title}>{data.guild.name}</Text>
-                        <Text style={styles.category}>{category.title}</Text>
+
+                        <Text style={styles.category}>{data.category}</Text>
+                        {/* trocar data.category para category.title */}
                     </View>
 
                     <View style={styles.footer}>
                         <View style={styles.dateInfo}>
-                            <Calendar />
+                            <CalendarSvg />
+
                             <Text style={styles.date}>{data.date}</Text>
                         </View>
-                        <View style={styles.playerInfo}></View>
-                        <Player fill={owner ? primary : on} />
-                        <Text
-                            style={[
-                                styles.player,
-                                { color: owner ? primary : on },
-                            ]}
-                        >
-                            {owner ? "Anfitrião" : "Visitante"}
-                        </Text>
+
+                        <View style={styles.playerInfo}>
+                            <PlayerSvg fill={owner ? primary : on} />
+
+                            <Text
+                                style={[
+                                    styles.player,
+                                    { color: owner ? primary : on },
+                                ]}
+                            >
+                                {owner ? "Anfitrião" : "Visitante"}
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </View>
